@@ -12,6 +12,9 @@ const taskSchema = z.object({
 })
 
 export const tasksRouter = createTRPCRouter({
+  test: publicProcedure.query(async () => {
+    return ['testando']
+  }),
   get: publicProcedure.query(async ({ ctx }) => {
     const tasks = await ctx.db.task.findMany()
     return tasks ?? null;
