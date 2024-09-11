@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { api } from "~/trpc/react"; 
+import { Card, CardContent, CardFooter, CardHeader } from "~/components/ui/card";
+import { Input } from "~/components/ui/input";
+import { Button } from "~/components/ui/button";
 
 export default function TaskList() {
     const { data: tasks, refetch: refetchTasks } = api.task.get.useQuery();
@@ -66,11 +69,16 @@ export default function TaskList() {
 
             <div className="grid grid-cols-1 gap-5 mb-4">
                 {tasks?.map((task) => (
-                    <div key={task.id} className="border p-4 rounded shadow">
-                        <h3 className="text-2xl font-bold text-pink-600">{task.title}</h3>
-                        <p className="text-lg text-orange-600">{task.description}</p>
-                        <div className="mt-4">
-                            <button
+                    <Card key={task.id} className="border p-4 rounded shadow">
+                        <CardHeader>
+                            <h3 className="text-2xl font-bold text-pink-600">{task.title}</h3>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-lg text-orange-600">{task.description}</p>
+                        </CardContent>
+                        <CardFooter>
+                            <Button
+                                variant="outline"
                                 onClick={() => {
                                     setEditTaskId(task.id);
                                     setEditTitle(task.title);
@@ -80,15 +88,16 @@ export default function TaskList() {
                                 className="bg-yellow-500 text-white px-4 py-2 rounded mr-2"
                             >
                                 Edit
-                            </button>
-                            <button
+                            </Button>
+                            <Button
+                                variant="destructive"
                                 onClick={() => handleDeleteTask(task.id)}
                                 className="bg-red-500 text-white px-4 py-2 rounded"
                             >
                                 Delete
-                            </button>
-                        </div>
-                    </div>
+                            </Button>
+                        </CardFooter>
+                    </Card>
                 ))}
             </div>
 
