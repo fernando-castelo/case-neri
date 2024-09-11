@@ -1,9 +1,8 @@
-"use client";
-
+"use client"
 import { useState } from "react";
 import { api } from "~/trpc/react"; 
 import TaskItem from "./task";
-import { type Task } from "../types/api";
+import { TaskListProps, type Task } from "../types/api";
 
 export default function TaskList() {
     const { data: tasks, refetch: refetchTasks } = api.task.get.useQuery();
@@ -69,11 +68,12 @@ export default function TaskList() {
         deleteTask.mutate({ id });
     };
 
+
     return (
         <div>
             <h1 className="text-4xl font-bold mb-4 text-blue-600">Task Manager</h1>
 
-            <div className="grid grid-cols-1 gap-5 mb-4">
+            <div className="grid grid-cols-1 gap-5 mb-4 m-5}">
                 {tasks?.map((task) => (
                 <TaskItem
                     key={task.id}
@@ -119,7 +119,7 @@ export default function TaskList() {
                         <div className="mt-4">
                             <button
                                 onClick={handleAddTask}
-                                className="bg-green-500 text-white px-4 py-2 rounded"
+                                className="bg-green-500 text-white px-4 py-2  mr-2 rounded"
                             >
                                 Save
                             </button>
@@ -156,9 +156,15 @@ export default function TaskList() {
                     <div className="mt-4">
                         <button
                             onClick={handleUpdateTask}
-                            className="bg-green-500 text-white px-4 py-2 rounded"
+                            className="bg-green-500 text-white px-4 py-2 mr-2 rounded"
                         >
                             Update
+                        </button>
+                        <button
+                            onClick={() => setIsEditing(!isEditing)}
+                            className="bg-red-500 text-white px-4 py-2 rounded"
+                        >
+                            Cancel
                         </button>
                     </div>
                 </div>
