@@ -1,5 +1,5 @@
 import { api, HydrateClient } from "~/trpc/server";
-import TaskList from "./_components/task";
+import TaskList from "./_components/tasklist";
 
 export default async function Home() {
   void api.post.getLatest.prefetch();
