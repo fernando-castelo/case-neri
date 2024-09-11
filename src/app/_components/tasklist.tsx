@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { api } from "~/trpc/react"; 
-import Task from "./task";
+import TaskItem from "./task";
+import { type Task } from "../types/api";
 
 export default function TaskList() {
     const { data: tasks, refetch: refetchTasks } = api.task.get.useQuery();
@@ -47,7 +48,7 @@ export default function TaskList() {
         });
     };
 
-    const handleOnClickUpdateTask = (task: { id: number; title: string; description: string | null }) => {
+    const handleOnClickUpdateTask = (task: Task) => {
         setEditTaskId(task.id);
         setEditTitle(task.title);
         setEditDescription(task.description);
@@ -74,7 +75,7 @@ export default function TaskList() {
 
             <div className="grid grid-cols-1 gap-5 mb-4">
                 {tasks?.map((task) => (
-                <Task 
+                <TaskItem
                     key={task.id}
                     task={task}
                     onEdit={handleOnClickUpdateTask}

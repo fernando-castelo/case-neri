@@ -1,12 +1,7 @@
 "use client"
-
-import { inferRouterOutputs } from "@trpc/server";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "~/components/ui/card";
-import { AppRouter } from "~/server/api/root";
-
-type RouterOutput = inferRouterOutputs<AppRouter>;
-type Task = RouterOutput['task']['get'][0]
+import { type Task } from "../types/api";
 
 type TaskItemProps = {
     task: Task;
@@ -14,7 +9,7 @@ type TaskItemProps = {
     onDelete: (id: number) => void;
 };
 
-export default function Task({ task, onEdit, onDelete }: TaskItemProps) {
+export default function TaskItem({ task, onEdit, onDelete }: TaskItemProps) {
         return (
          <div>
             <Card key={task.id} className="border p-4 rounded shadow">
