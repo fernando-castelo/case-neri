@@ -1,4 +1,3 @@
-import {  PrismaClient } from "@prisma/client/extension";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 
@@ -12,9 +11,6 @@ const taskSchema = z.object({
 })
 
 export const tasksRouter = createTRPCRouter({
-  test: publicProcedure.query(async () => {
-    return ['testando']
-  }),
   get: publicProcedure.query(async ({ ctx }) => {
     const tasks = await ctx.db.task.findMany()
     return tasks ?? null;
@@ -28,6 +24,17 @@ export const tasksRouter = createTRPCRouter({
             description: input.description
         }
       })
+    }),
+    update: publicProcedure
+    .input(taskSchema.merge(idSchema))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.task.update({
+        where: { id: input.id },
+        data: {
+          title: input.title,
+          description: input.description,
+        },
+      });
     }),
     delete: publicProcedure
     .input(idSchema)
