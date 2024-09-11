@@ -4,8 +4,8 @@ import { api } from "~/trpc/react";
 import TaskItem from "./task";
 import { TaskListProps, type Task } from "../types/api";
 
-export default function TaskList() {
-    const { data: tasks, refetch: refetchTasks } = api.task.get.useQuery();
+export default function TaskList({ initialTasks }: TaskListProps) {
+    const { data: tasks, refetch: refetchTasks } = api.task.get.useQuery(undefined, {initialData: initialTasks},);
     
     const addTask = api.task.create.useMutation({
         onSuccess: async () => {
